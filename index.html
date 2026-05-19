@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeKiSan TP 3D</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>KeKiSan <span>TP 3D</span></h1>
+    <div class="main-nav">
+        <button class="nav-btn is-active" id="nav-tabla">⊞ Tabla</button>
+        <button class="nav-btn" id="nav-herramientas">⚗ Herramientas</button>
+    </div>
+    <div id="tabla-controls">
+        <div class="controls">
+            <button id="table" class="layout-toggle is-active">⊞ Table</button>
+            <button id="sphere" class="layout-toggle">◉ Sphere</button>
+            <button id="helix" class="layout-toggle">⟳ Helix</button>
+        </div>
+        <div class="hint-3d" id="hint-3d">🖱 Arrastra para rotar · ↑↓←→ Teclado</div>
+    </div>
+</header>
+
+<div class="filter-bar" id="filter-bar">
+    <span class="filter-label">Filtrar:</span>
+    <button class="filter-btn is-active" data-filter="all">Todos</button>
+    <button class="filter-btn alcalinos"          data-filter="alcalinos">Alcalinos</button>
+    <button class="filter-btn alcalinoterreos"    data-filter="alcalinoterreos">Alcalinotérreos</button>
+    <button class="filter-btn metales-transicion" data-filter="metales-transicion">M. Transición</button>
+    <button class="filter-btn otros-metales"      data-filter="otros-metales">Otros Metales</button>
+    <button class="filter-btn metaloides"         data-filter="metaloides">Metaloides</button>
+    <button class="filter-btn no-metales"         data-filter="no-metales">No Metales</button>
+    <button class="filter-btn halogenos"          data-filter="halogenos">Halógenos</button>
+    <button class="filter-btn gases-nobles"       data-filter="gases-nobles">Gases Nobles</button>
+    <button class="filter-btn lantanidos"         data-filter="lantanidos">Lantánidos</button>
+    <button class="filter-btn actinidos"          data-filter="actinidos">Actínidos</button>
+</div>
+
+<main id="vista-tabla">
+    <div id="contenedor-3d" class="modo-table">
+        <p class="loading-message">Cargando elementos...</p>
+    </div>
+</main>
+
+<section id="vista-herramientas" class="oculto">
+    <div class="herramientas-header">
+        <h2>Herramientas de química</h2>
+        <p>UTILIDADES Y CALCULADORAS PARA QUÍMICA</p>
+    </div>
+    <div class="herramientas-grid">
+        <div class="herramienta-card" data-tool="balanceador">
+            <div class="tool-icon icon-balance">⚖</div>
+            <div class="tool-info">
+                <h3>Balanceador de ecuaciones</h3>
+                <p>Balancea ecuaciones químicas automáticamente con retroalimentación estequiométrica.</p>
+            </div>
+        </div>
+        <div class="herramienta-card" data-tool="masa-molar">
+            <div class="tool-icon icon-masa">⚗</div>
+            <div class="tool-info">
+                <h3>Calculadora de masa molar</h3>
+                <p>Calcula pesos moleculares con desglose detallado elemento por elemento.</p>
+            </div>
+        </div>
+        <div class="herramienta-card" data-tool="solubilidad">
+            <div class="tool-icon icon-solub">💧</div>
+            <div class="tool-info">
+                <h3>Tabla de solubilidad</h3>
+                <p>Reglas generales y analizador lógico offline para determinar la solubilidad de compuestos.</p>
+            </div>
+        </div>
+        <div class="herramienta-card" data-tool="conversor">
+            <div class="tool-icon icon-conv">🔁</div>
+            <div class="tool-info">
+                <h3>Conversor de unidades</h3>
+                <p>Convierte entre mol, gramos, moléculas y litros en condiciones normales.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="info-modal" class="modal oculto">
+    <div class="modal-content">
+        <button id="btn-cerrar" class="close-button">&times;</button>
+
+        <div class="modal-header">
+            <div class="modal-symbol" id="modal-simbolo">H</div>
+            <div class="modal-title-block">
+                <h2 id="modal-nombre">Hidrógeno</h2>
+                <span id="modal-familia-badge" class="familia-badge">—</span>
+            </div>
+        </div>
+
+        <div class="modal-grid">
+            <div class="modal-item"><span class="label">Número Atómico</span><span id="modal-numero"></span></div>
+            <div class="modal-item"><span class="label">Peso Atómico</span><span id="modal-peso"></span><small> g/mol</small></div>
+            <div class="modal-item"><span class="label">Electronegatividad</span><span id="modal-electroneg"></span></div>
+            <div class="modal-item"><span class="label">Estados de Oxidación</span><span id="modal-oxidacion"></span></div>
+            <div class="modal-item"><span class="label">Grupo</span><span id="modal-grupo"></span></div>
+            <div class="modal-item"><span class="label">Periodo</span><span id="modal-periodo"></span></div>
+        </div>
+
+        <button class="curiosidad-btn" id="btn-curiosidad">
+            <span class="curio-btn-icon">?</span>
+            Descripción e información detallada
+        </button>
+
+        <div id="curiosidades-panel" class="curiosidades-panel oculto">
+            <div id="curiosidades-content" class="curio-content"></div>
+        </div>
+    </div>
+</div>
+
+<div id="tool-modal" class="modal oculto">
+    <div class="tool-modal-content">
+        <button id="tool-btn-cerrar" class="close-button">&times;</button>
+        <h3 id="tool-modal-title"></h3>
+        <div id="tool-modal-body"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
